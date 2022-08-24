@@ -2,9 +2,12 @@ const rulesBtn = document.getElementById('rules-btn');
 const closeBtn = document.getElementById('close-btn');
 const rules = document.getElementById('rules');
 const canvas = document.getElementById('canvas');
+const replayBtn = document.getElementById('replay');
 const ctx = canvas.getContext('2d');
+const replay = document.getElementById('overlay');
 
 let score = 0;
+let highScore = 0;
 
 const brickRowCount = 9;
 const brickColumnCount = 5;
@@ -35,7 +38,7 @@ const brickInfo = {
   h: 20,
   padding: 10,
   offsetX: 45,
-  offsetY: 60,
+  offsetY: 80,
   visible: true,
 };
 
@@ -72,6 +75,7 @@ function drawPaddle() {
 function drawScore() {
   ctx.font = '20px Arial';
   ctx.fillText(`Score: ${score}`, canvas.width - 100, 30);
+  ctx.fillText(`Highsore: ${highScore}`, canvas.width - 127, 50);
 }
 
 //Draw bricks on Canvas
@@ -134,6 +138,8 @@ function moveBall() {
     showAllBricks();
     ball.dy = 0;
     ball.dx = 0;
+    replay.classList.remove('hide');
+    replay.classList.add('unhide');
   }
 }
 
@@ -206,9 +212,16 @@ function keyUp(e) {
   }
 }
 
+function replayGame() {
+  replay.style.display = 'none';
+  ball.dx = 4;
+  ball.dy = -4;
+}
+
 //Keyboard event handling
 document.addEventListener('keydown', keyDown);
 document.addEventListener('keyup', keyUp);
 
 rulesBtn.addEventListener('click', () => rules.classList.add('show'));
 closeBtn.addEventListener('click', () => rules.classList.remove('show'));
+replayBtn.addEventListener('click', replayGame);

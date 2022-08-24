@@ -24,6 +24,23 @@ canvas {
   border-radius: 5px;
 }
 
+.hide {
+  display: none;
+}
+.unhide {
+  display: flex;
+}
+
+.overlay {
+  flex-direction: column;
+  background: #c0aa00;
+  position: absolute;
+  padding: 10px;
+  border-radius: 5px;
+  align-items: center;
+  justify-content: center;
+}
+
 .btn {
   cursor: pointer;
   border: 0;
