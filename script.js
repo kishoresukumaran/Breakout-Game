@@ -53,6 +53,21 @@ for (let i = 0; i < brickRowCount; i++) {
   }
 }
 
+//Increase Score
+function increaseScore() {
+  score++;
+  if (score % (brickRowCount * brickRowCount) === 0) {
+    showAllBricks();
+  }
+}
+
+//Make all bricks appear
+function showAllBricks() {
+  bricks.forEach((column) => {
+    column.forEach((brick) => (brick.visible = true));
+  });
+}
+
 //Draw a ball on Canvas
 function drawBall() {
   ctx.beginPath();
@@ -113,6 +128,24 @@ function moveBall() {
   ) {
     ball.dy = -ball.speed;
   }
+
+  //Handling Bricks Collision
+  bricks.forEach((column) => {
+    column.forEach((brick) => {
+      if (brick.visible) {
+        if (
+          ball.x - ball.size > brick.x && //left brick side check
+          ball.x + ball.size < brick.x + brick.w && //right side brick checking
+          ball.y + ball.size > brick.y && //top side check
+          ball.y - ball.size < brick.y + brick.h //Bottom brick side check
+        ) {
+          ball.dy *= -1;
+          brick.visible = false;
+          increaseScore();
+        }
+      }
+    });
+  });
 
   //Hit bottom wall - Lose
   if (ball.y + ball.size > canvas.height) {
